@@ -117,9 +117,9 @@ body {
     padding: 20px;
     background: linear-gradient(
         to right,
-        rgba(255, 18, 165, 0.3), /* Subtle pinkish-purple from the left */
-        rgba(192, 132, 252, 0.1), /* Very faint purple in the center */
-        rgba(255, 18, 165, 0.3) /* Subtle pinkish-purple from the right */
+        rgba(255, 18, 165, 0.2), /* Subtle pinkish-purple from the left */
+        rgba(192, 132, 252, 0.05), /* Very faint purple in the center */
+        rgba(255, 18, 165, 0.2) /* Subtle pinkish-purple from the right */
     ), #0b0c0c; /* Base background color */
     border-radius: 5px;
     min-height: 190px;

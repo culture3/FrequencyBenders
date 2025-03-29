@@ -1,0 +1,360 @@
+body {
+    background-color: #040404;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    font-family: 'Bai Jamjuree', sans-serif;
+}
+
+/* Spacer to push content down */
+.spacer {
+    height: 100px;
+}
+
+.case-container {
+    width: 80%;
+    max-width: 1200px;
+    height: 200px;
+    margin: 20px 0;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 18, 165, 0.1), /* Subtle pinkish-purple from the top */
+        rgba(192, 132, 252, 0.05) 50%, /* Faint purple in the center */
+        rgba(255, 18, 165, 0.1) /* Subtle pinkish-purple from the bottom */
+    ), #0b0c0c; /* Base background color */
+    box-shadow: 0 0 67px 33px rgba(255, 18, 165, 0.15); /* Reduced from 100px/50px/0.3 */
+}
+
+.case-container::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 80%; /* 160px out of 200px */
+    background: #ffffff;
+    z-index: 2;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, white 10%, white 90%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, white 10%, white 90%, transparent 100%);
+}
+
+.spin-container {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.item {
+    margin: 0 10px;
+    opacity: 0.5;
+    display: inline-block;
+}
+
+.item-wrapper {
+    position: relative;
+    width: 92px; /* Matches watermark’s native width */
+    height: 80px; /* Matches watermark’s native height */
+    overflow: visible; /* Ensures no clipping */
+}
+
+.watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 92px; /* Native size, no scaling */
+    height: 80px; /* Native size, no scaling */
+    opacity: 0.3; /* Your original opacity */
+    z-index: 0; /* Behind item image */
+}
+
+.item-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px; /* Consistent size */
+    height: 70px; /* Consistent size */
+    object-fit: contain; /* Preserves aspect ratio */
+    z-index: 1; /* Above watermark */
+    filter: drop-shadow(0 0 13px rgba(255, 18, 165, 0.67)) drop-shadow(0 0 27px rgba(192, 132, 252, 0.33)); /* Reduced from 20px/1 and 40px/0.5 */
+}
+
+.winning-item-text {
+    position: absolute;
+    bottom: -15px; /* Moved further below (was 5px) */
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ffffff;
+    font-size: 1em;
+    font-family: 'Bai Jamjuree', sans-serif;
+    text-shadow: 0 0 7px rgba(147, 51, 234, 0.53), 0 0 13px rgba(192, 132, 252, 0.33); /* Reduced from 10px/0.8 and 20px/0.5 */
+    white-space: nowrap;
+    z-index: 2;
+	font-weight: bold; /* Added bold */
+}
+
+.case-details {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    max-width: 1200px;
+    margin: 20px 0;
+    padding: 20px;
+    background: linear-gradient(
+        to right,
+        rgba(255, 18, 165, 0.3), /* Subtle pinkish-purple from the left */
+        rgba(192, 132, 252, 0.1), /* Very faint purple in the center */
+        rgba(255, 18, 165, 0.3) /* Subtle pinkish-purple from the right */
+    ), #0b0c0c; /* Base background color */
+    border-radius: 5px;
+    min-height: 190px;
+    box-shadow: 0px 0px 53px 27px rgba(255, 18, 165, 0.1); /* Reduced from 80px/40px/0.2 */
+}
+
+.case-image {
+    width: 150px;
+    height: 150px;
+    margin-right: 40px;
+}
+
+.case-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1; /* Allows case-info to take available space */
+}
+
+.last-drop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px; /* Matches case-image width for symmetry */
+    margin-left: 40px; /* Mirrors margin-right of case-image */
+}
+
+.last-drop h3 {
+    color: #fff;
+    font-size: 1.2em;
+    margin: 0 0 10px 0; /* Consistent margin */
+}
+
+.last-drop-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 130px; /* Fixed height to maintain consistent positioning */
+}
+
+.last-drop-image {
+    width: 100px; /* Increased size */
+    height: 100px; /* Increased size */
+    object-fit: contain;
+    margin: 0 0 10px 0; /* Fixed spacing below image */
+    filter: drop-shadow(0 0 27px rgba(255, 18, 165, 0.67)); /* Reduced from 40px/1 */
+}
+
+.last-drop-text {
+    color: #fff;
+    font-size: 1.2em; /* Increased text size */
+    text-align: center;
+    word-wrap: break-word;
+    max-width: 100%;
+    text-shadow: 0 0 13px rgba(255, 18, 165, 0.27); /* Reduced from 20px/0.4 */
+	font-weight: bold; /* Added bold */
+}
+
+.case-name {
+    color: #fff;
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.open-case-btn {
+    margin-top: 0px;
+    padding: 8px 10px;
+    background-color: #a12071;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block;
+    width: 120px;
+    font-family: 'Bai Jamjuree', sans-serif;
+}
+
+.open-case-btn:hover {
+    background-color: #7b0f52;
+}
+
+/* Potential Drops Section */
+.potential-drops {
+    width: 80%;
+    max-width: 1200px;
+    margin: 20px 0;
+}
+
+.potential-drops h3 {
+    color: #fff;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.item-list-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+}
+
+.item-list-item {
+    background: linear-gradient(
+        to right,
+        rgba(255, 18, 165, 0.2), /* Subtle pinkish-purple from the left */
+        rgba(192, 132, 252, 0.05), /* Very faint purple in the center */
+        rgba(255, 18, 165, 0.2) /* Subtle pinkish-purple from the right */
+    ), #0b0c0c; /* Base background color */
+    border-radius: 5px;
+    padding: 10px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    box-shadow: 0px 0px 53px 27px rgba(255, 18, 165, 0.13); /* Reduced from 80px/40px/0.2 */
+}
+
+.list-item-image {
+    flex: 0 0 auto;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100%;
+}
+
+.list-item-image img {
+    width: 70px;
+    height: auto;
+}
+
+.item-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.item-category {
+    font-size: 0.8em;
+    color: #888;
+    margin-bottom: 2.5px;
+}
+
+.item-name {
+    font-size: 1em;
+    font-weight: bold;
+    color: #fff;
+}
+
+.percentage {
+    position: absolute;
+    top: -25px;
+    right: 0px;
+    background: #151719;
+    color: #fff;
+    padding: 2px 5px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    min-width: 40px;
+    text-align: center;
+	font-weight: bold; /* Added bold */
+}
+
+.case-container, .case-details {
+    box-sizing: border-box;
+}
+
+.case-description {
+    color: #fff;
+    font-size: 1em;
+    margin: 10px 0;
+}
+
+.additional-rules {
+    color: #fff;
+    font-size: 0.9em;
+    margin: 5px 0 20px 0;
+    font-style: italic;
+}
+
+/* Floating animation for winning item */
+@keyframes float-image {
+    0% { transform: translate(-50%, -50%) translateY(0px); }
+    50% { transform: translate(-50%, -50%) translateY(-5px); }
+    100% { transform: translate(-50%, -50%) translateY(0px); }
+}
+
+.float-image {
+    animation: float-image 1.5s infinite ease-in-out;
+}
+
+.gifted-sub {
+    margin-top: -5px; /* Brings this line closer to the first line */
+    margin-bottom: 1em; /* Maintains spacing before additional rules */
+    color: #fff;
+    font-size: 1em;
+}
+
+/* Page Watermark */
+.page-watermark {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    color: #999; /* Grey color */
+    font-size: 0.9em;
+    font-family: 'Bai Jamjuree', sans-serif;
+    z-index: 10; /* Ensures it stays above other content */
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centers the contents horizontally */
+    width: 100%; /* Changed to full width for centering */
+    margin-bottom: -100px;
+    margin-top: -20px;
+}
+
+.logo-image {
+    width: 80px; /* Adjust size as needed */
+    height: 80px; /* Adjust size as needed */
+    object-fit: contain;
+    filter: drop-shadow(0 0 13px rgba(255, 18, 165, 0.53)); /* Reduced from 20px/0.8 */
+    margin-top: 50px;
+}
+
+.logo-text {
+    color: #fff;
+    font-size: 2em;
+    font-family: 'Oswald', sans-serif; /* Using Oswald for a bold look */
+    margin-left: 20px;
+    text-shadow: 0 0 7px rgba(147, 51, 234, 0.53), 0 0 13px rgba(192, 132, 252, 0.33); /* Reduced from 10px/0.8 and 20px/0.5 */
+    margin-top: 50px;
+    font-family: 'Bai Jamjuree', sans-serif;
+}

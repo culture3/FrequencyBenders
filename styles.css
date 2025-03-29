@@ -10,7 +10,6 @@ body {
     font-family: 'Bai Jamjuree', sans-serif;
 }
 
-/* Spacer to push content down */
 .spacer {
     height: 100px;
 }
@@ -25,11 +24,11 @@ body {
     border-radius: 10px;
     background: linear-gradient(
         to bottom,
-        rgba(255, 18, 165, 0.1), /* Subtle pinkish-purple from the top */
-        rgba(192, 132, 252, 0.05) 50%, /* Faint purple in the center */
-        rgba(255, 18, 165, 0.1) /* Subtle pinkish-purple from the bottom */
-    ), #0b0c0c; /* Base background color */
-    box-shadow: 0 0 67px 33px rgba(255, 18, 165, 0.15); /* Reduced from 100px/50px/0.3 */
+        rgba(255, 18, 165, 0.1),
+        rgba(192, 132, 252, 0.05) 50%,
+        rgba(255, 18, 165, 0.1)
+    ), #0b0c0c;
+    box-shadow: 0 0 67px 33px rgba(255, 18, 165, 0.15);
 }
 
 .case-container::before {
@@ -39,7 +38,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: 2px;
-    height: 80%; /* 160px out of 200px */
+    height: 80%;
     background: #ffffff;
     z-index: 2;
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, white 10%, white 90%, transparent 100%);
@@ -66,9 +65,9 @@ body {
 
 .item-wrapper {
     position: relative;
-    width: 92px; /* Matches watermark’s native width */
-    height: 80px; /* Matches watermark’s native height */
-    overflow: visible; /* Ensures no clipping */
+    width: 92px;
+    height: 80px;
+    overflow: visible;
 }
 
 .watermark {
@@ -76,10 +75,10 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 92px; /* Native size, no scaling */
-    height: 80px; /* Native size, no scaling */
-    opacity: 0.3; /* Your original opacity */
-    z-index: 0; /* Behind item image */
+    width: 92px;
+    height: 80px;
+    opacity: 0.3;
+    z-index: 0;
 }
 
 .item-image {
@@ -87,25 +86,25 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 70px; /* Consistent size */
-    height: 70px; /* Consistent size */
-    object-fit: contain; /* Preserves aspect ratio */
-    z-index: 1; /* Above watermark */
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    z-index: 1;
     filter: drop-shadow(0 0 13px rgba(255, 18, 165, 0.67)) drop-shadow(0 0 27px rgba(192, 132, 252, 0.33)); /* Reduced from 20px/1 and 40px/0.5 */
 }
 
 .winning-item-text {
     position: absolute;
-    bottom: -15px; /* Moved further below (was 5px) */
+    bottom: -15px;
     left: 50%;
     transform: translateX(-50%);
     color: #ffffff;
     font-size: 1em;
     font-family: 'Bai Jamjuree', sans-serif;
-    text-shadow: 0 0 7px rgba(147, 51, 234, 0.53), 0 0 13px rgba(192, 132, 252, 0.33); /* Reduced from 10px/0.8 and 20px/0.5 */
+    text-shadow: 0 0 7px rgba(147, 51, 234, 0.53), 0 0 13px rgba(192, 132, 252, 0.33);
     white-space: nowrap;
     z-index: 2;
-	font-weight: bold; /* Added bold */
+	font-weight: bold;
 }
 
 .case-details {
@@ -117,13 +116,13 @@ body {
     padding: 20px;
     background: linear-gradient(
         to right,
-        rgba(255, 18, 165, 0.2), /* Subtle pinkish-purple from the left */
-        rgba(192, 132, 252, 0.05), /* Very faint purple in the center */
-        rgba(255, 18, 165, 0.2) /* Subtle pinkish-purple from the right */
-    ), #0b0c0c; /* Base background color */
+        rgba(255, 18, 165, 0.2),
+        rgba(192, 132, 252, 0.05),
+        rgba(255, 18, 165, 0.2)
+    ), #0b0c0c;
     border-radius: 5px;
     min-height: 190px;
-    box-shadow: 0px 0px 53px 27px rgba(255, 18, 165, 0.1); /* Reduced from 80px/40px/0.2 */
+    box-shadow: 0px 0px 53px 27px rgba(255, 18, 165, 0.1);
 }
 
 .case-image {
@@ -136,46 +135,46 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    flex: 1; /* Allows case-info to take available space */
+    flex: 1;
 }
 
 .last-drop {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 150px; /* Matches case-image width for symmetry */
-    margin-left: 40px; /* Mirrors margin-right of case-image */
+    width: 150px;
+    margin-left: 40px;
 }
 
 .last-drop h3 {
     color: #fff;
     font-size: 1.2em;
-    margin: 0 0 10px 0; /* Consistent margin */
+    margin: 0 0 10px 0;
 }
 
 .last-drop-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 130px; /* Fixed height to maintain consistent positioning */
+    min-height: 130px;
 }
 
 .last-drop-image {
-    width: 100px; /* Increased size */
-    height: 100px; /* Increased size */
+    width: 100px;
+    height: 100px;
     object-fit: contain;
-    margin: 0 0 10px 0; /* Fixed spacing below image */
-    filter: drop-shadow(0 0 27px rgba(255, 18, 165, 0.67)); /* Reduced from 40px/1 */
+    margin: 0 0 10px 0;
+    filter: drop-shadow(0 0 27px rgba(255, 18, 165, 0.67));
 }
 
 .last-drop-text {
     color: #fff;
-    font-size: 1.2em; /* Increased text size */
+    font-size: 1.2em;
     text-align: center;
     word-wrap: break-word;
     max-width: 100%;
-    text-shadow: 0 0 13px rgba(255, 18, 165, 0.27); /* Reduced from 20px/0.4 */
-	font-weight: bold; /* Added bold */
+    text-shadow: 0 0 13px rgba(255, 18, 165, 0.27);
+	font-weight: bold;
 }
 
 .case-name {
@@ -203,7 +202,6 @@ body {
     background-color: #7b0f52;
 }
 
-/* Potential Drops Section */
 .potential-drops {
     width: 80%;
     max-width: 1200px;
@@ -225,17 +223,17 @@ body {
 .item-list-item {
     background: linear-gradient(
         to right,
-        rgba(255, 18, 165, 0.2), /* Subtle pinkish-purple from the left */
-        rgba(192, 132, 252, 0.05), /* Very faint purple in the center */
-        rgba(255, 18, 165, 0.2) /* Subtle pinkish-purple from the right */
-    ), #0b0c0c; /* Base background color */
+        rgba(255, 18, 165, 0.2),
+        rgba(192, 132, 252, 0.05),
+        rgba(255, 18, 165, 0.2)
+    ), #0b0c0c;
     border-radius: 5px;
     padding: 10px;
     height: 80px;
     display: flex;
     align-items: center;
     position: relative;
-    box-shadow: 0px 0px 53px 27px rgba(255, 18, 165, 0.13); /* Reduced from 80px/40px/0.2 */
+    box-shadow: 0px 0px 53px 27px rgba(255, 18, 165, 0.13);
 }
 
 .list-item-image {
@@ -283,7 +281,7 @@ body {
     font-size: 0.9em;
     min-width: 40px;
     text-align: center;
-	font-weight: bold; /* Added bold */
+	font-weight: bold;
 }
 
 .case-container, .case-details {
@@ -303,7 +301,6 @@ body {
     font-style: italic;
 }
 
-/* Floating animation for winning item */
 @keyframes float-image {
     0% { transform: translate(-50%, -50%) translateY(0px); }
     50% { transform: translate(-50%, -50%) translateY(-5px); }
@@ -315,46 +312,45 @@ body {
 }
 
 .gifted-sub {
-    margin-top: -5px; /* Brings this line closer to the first line */
-    margin-bottom: 1em; /* Maintains spacing before additional rules */
+    margin-top: -5px;
+    margin-bottom: 1em;
     color: #fff;
     font-size: 1em;
 }
 
-/* Page Watermark */
 .page-watermark {
     position: fixed;
     bottom: 10px;
     left: 10px;
-    color: #999; /* Grey color */
+    color: #999;
     font-size: 0.9em;
     font-family: 'Bai Jamjuree', sans-serif;
-    z-index: 10; /* Ensures it stays above other content */
+    z-index: 10;
 }
 
 .logo-container {
     display: flex;
     align-items: center;
-    justify-content: center; /* Centers the contents horizontally */
-    width: 100%; /* Changed to full width for centering */
+    justify-content: center;
+    width: 100%;
     margin-bottom: -100px;
     margin-top: -20px;
 }
 
 .logo-image {
-    width: 80px; /* Adjust size as needed */
-    height: 80px; /* Adjust size as needed */
+    width: 80px;
+    height: 80px;
     object-fit: contain;
-    filter: drop-shadow(0 0 13px rgba(255, 18, 165, 0.53)); /* Reduced from 20px/0.8 */
+    filter: drop-shadow(0 0 13px rgba(255, 18, 165, 0.53));
     margin-top: 50px;
 }
 
 .logo-text {
     color: #fff;
     font-size: 2em;
-    font-family: 'Oswald', sans-serif; /* Using Oswald for a bold look */
+    font-family: 'Oswald', sans-serif;
     margin-left: 20px;
-    text-shadow: 0 0 7px rgba(147, 51, 234, 0.53), 0 0 13px rgba(192, 132, 252, 0.33); /* Reduced from 10px/0.8 and 20px/0.5 */
+    text-shadow: 0 0 7px rgba(147, 51, 234, 0.53), 0 0 13px rgba(192, 132, 252, 0.33);
     margin-top: 50px;
     font-family: 'Bai Jamjuree', sans-serif;
 }

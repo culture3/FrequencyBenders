@@ -16,7 +16,7 @@ $(document).ready(function () {
             return true;
         }
         return false;
-    }); // Top 10%: "MAX WIN 50 Tip" (1%), "25 Tip" (2%), "15 Tip" (7%)
+    });
 
     cumulativeProb = 0;
     const cumulativeProbs = items.map((item) => {
@@ -92,7 +92,6 @@ $(document).ready(function () {
     }
 
     const tickSound = document.getElementById("tickSound");
-    const winSound = document.getElementById("winSound");
     populateReel();
 
     $(".open-case-btn").on("click", function () {
@@ -112,7 +111,6 @@ $(document).ready(function () {
         }
     }
 
-    // Initialize Last Drop as blank on page load
     updateLastDrop(null, null);
 
     function spinWheel(button) {
@@ -148,7 +146,6 @@ $(document).ready(function () {
                     lastCenteredItemIndex = updateItemOpacityAndSound(itemWidth, absoluteCenter, lastCenteredItemIndex);
                 },
                 complete: function () {
-                    // Determine the winner based on the closest item to the center at stopPosition
                     let closestItemIndex = -1;
                     let minDistanceFromCenter = Infinity;
                     $(".item").each(function (index) {
@@ -161,10 +158,8 @@ $(document).ready(function () {
                         }
                     });
 
-                    // Calculate the final centered position for the winning item
                     const finalCenterPosition = -1 * (itemWidth * closestItemIndex - caseContainerWidth / 2 + itemWidth / 2);
 
-                    // Second animation to center the winner
                     spinContainer.animate(
                         { left: finalCenterPosition },
                         {
@@ -198,7 +193,6 @@ $(document).ready(function () {
                                     setTimeout(() => spinWheel(button), 1500);
                                 } else {
                                     triggerConfetti(winningElement);
-                                    playWinSound();
                                     updateLastDrop(winningItem.image, winningItem.name);
                                     button.prop("disabled", false).text("Open Case");
                                     if (isSpecialSpin) isSpecialSpin = false;
@@ -255,14 +249,5 @@ $(document).ready(function () {
             startVelocity: 40,
             disableForReducedMotion: true,
         });
-    }
-
-    function playWinSound() {
-        if (winSound) {
-            winSound.currentTime = 0;
-            winSound.play().catch((error) => console.log("Error playing win sound:", error));
-        } else {
-            console.log("Win sound element not found!");
-        }
     }
 });

@@ -18,10 +18,10 @@ $(document).ready(function () {
     let winnerMessagesList = [];
     let isSpecialSpin = false;
     let specialItemPool = [];
-    let lastWinners = JSON.parse(localStorage.getItem('lastWinners')) || [];
+    let isReelInParticipantMode = true;
 
     // Define top items (individual probability ≤ 10%, totaling 15.2%)
-    const topPercentItems = potentialDrops.filter(item => item.probability <= 10); // 100 Tip, 50 Tip, 25 Tip
+    const topPercentItems = potentialDrops.filter(item => item.probability <= 10);
 
     // DOM elements
     const keywordInput = $('#keyword-input');
@@ -33,6 +33,11 @@ $(document).ready(function () {
     const rerollButton = $('#clear-giveaway');
     const tickSound = document.getElementById('tickSound');
     const winnersList = $('#winners-list');
+    const leaderboardList = $('#leaderboard-list');
+    const totalGivenAwayDisplay = $('#total-given-away');
+
+    // Server URL
+    const serverUrl = 'https://frequencybenders.infinityfreeapp.com';
 
     let cumulativeProb = 0;
     const cumulativeProbs = potentialDrops.map((item) => {
@@ -45,16 +50,38 @@ $(document).ready(function () {
         return itemPool.map((item) => (cumProb += item.probability));
     }
 
-    // Function to update last winners list
-    function updateLastWinners(winner) {
-        lastWinners.unshift({ winner, timestamp: new Date().toISOString() });
-        if (lastWinners.length > 5) lastWinners.pop();
-        localStorage.setItem('lastWinners', JSON.stringify(lastWinners));
-        displayLastWinners();
+    // Fetch initial data from server
+    function fetchData() {
+        $.getJSON(`${serverUrl}/get_data.php`, (data) => {
+            displayLastWinners(data.lastWinners);
+            displayLeaderboard(data.leaderboard, data.totalGivenAway);
+        }).fail((error) => {
+            console.error('Error fetching data:', error);
+        });
+    }
+
+    // Function to update last winners and leaderboard on server
+    function updateServerData(winner, prizeName) {
+        $.ajax({
+            url: `${serverUrl}/update_winner.php`,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ winner, prizeName }),
+            success: (response) => {
+                if (response.success) {
+                    fetchData(); // Refresh data after update
+                } else {
+                    console.error('Server update failed:', response.error);
+                }
+            },
+            error: (error) => {
+                console.error('Error updating server:', error);
+            }
+        });
     }
 
     // Function to display last winners
-    function displayLastWinners() {
+    function displayLastWinners(lastWinners) {
         winnersList.empty();
         lastWinners.forEach(({ winner }) => {
             const listItem = $(`<li>${winner}</li>`);
@@ -62,8 +89,26 @@ $(document).ready(function () {
         });
     }
 
+    // Function to display leaderboard
+    function displayLeaderboard(leaderboard, totalGivenAway) {
+        leaderboardList.empty();
+        leaderboard.forEach(({ username, total_coins }) => {
+            const listItem = $(`<li>${username}: ${total_coins}</li>`);
+            leaderboardList.append(listItem);
+        });
+
+        // Fill with empty entries if less than 10
+        const emptySlots = 10 - leaderboard.length;
+        for (let i = 0; i < emptySlots; i++) {
+            const emptyItem = $(`<li> </li>`);
+            leaderboardList.append(emptyItem);
+        }
+
+        totalGivenAwayDisplay.text(totalGivenAway || 0);
+    }
+
     // WebSocket setup
-    const channelId = '11408596';
+    const channelId = '4847686';
     const ws = new WebSocket('wss://ws-us2.pusher.com/app/32cbd69e4b950bf97679?protocol=7&client=js&version=8.4.0-rc2&flash=false');
     ws.onopen = () => {
         console.log('Connected to Kick Chat WebSocket');
@@ -81,7 +126,9 @@ $(document).ready(function () {
             const emoteMatch = content.match(/\[emote:\d+:(.*?)\]/);
             if (emoteMatch) content = emoteMatch[1];
             if (!isSpinning && keyword && content.trim().toLowerCase() === keyword.toLowerCase()) {
-                if (participants.add(username)) updateParticipants();
+                if (participants.add(username)) {
+                    updateParticipants();
+                }
             }
             if (currentWinner && username === currentWinner) {
                 winnerMessagesList.push(content);
@@ -101,7 +148,9 @@ $(document).ready(function () {
     // Update participants
     function updateParticipants() {
         participantCount.text(participants.size);
-        populateReel(Array.from(participants));
+        if (isReelInParticipantMode && !isSpinning && !winnerSelected) {
+            populateReel(Array.from(participants));
+        }
     }
 
     // Populate reel
@@ -184,8 +233,10 @@ $(document).ready(function () {
             winnerName.text('None');
             winnerMessages.empty();
             winnerMessagesList = [];
+            isReelInParticipantMode = true;
             populateReel(Array.from(participants));
         } else {
+            isReelInParticipantMode = false;
             populateReel(potentialDrops);
         }
 
@@ -249,7 +300,7 @@ $(document).ready(function () {
                                     winnerName.text(currentWinner);
                                     winningElement.find('.participant-name')
                                         .addClass('float-image highlighted-winner');
-                                    updateLastWinners(currentWinner);
+                                    updateServerData(currentWinner, '0 Tip'); // Add winner with 0 coins for now
                                     winnerSelected = true;
                                     updateButtons();
                                 } else {
@@ -267,10 +318,11 @@ $(document).ready(function () {
                                     if (isTop && !isSpecialSpin) {
                                         console.log("Frequency Spin triggered! Re-spinning with top items...");
                                         isSpecialSpin = true;
-                                        specialItemPool = topPercentItems; // 100 Tip, 50 Tip, 25 Tip
+                                        specialItemPool = topPercentItems;
                                         setTimeout(() => spinWheel(button, true), 1500);
                                     } else {
                                         triggerConfetti(winningElement);
+                                        updateServerData(currentWinner, winningItem.name); // Update with prize
                                         winnerSelected = false;
                                         if (isSpecialSpin) isSpecialSpin = false;
                                         updateButtons();
@@ -355,7 +407,9 @@ $(document).ready(function () {
             winnerName.text('None');
             winnerMessages.empty();
             winnerMessagesList = [];
+            isReelInParticipantMode = true;
             updateParticipants();
+            populateReel(Array.from(participants));
             updateButtons();
         }
     });
@@ -363,5 +417,6 @@ $(document).ready(function () {
     // Initial setup
     updateButtons();
     participantCount.text('0');
-    displayLastWinners();
+    fetchData(); // Fetch initial data from server
+    populateReel(Array.from(participants));
 });

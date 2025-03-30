@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FrequencyBenders Sub Case</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>FrequencyBenders Giveaway</title>
+    <link rel="stylesheet" href="giveaway.css">
     <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@200&family=Oswald:wght@600&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -13,8 +13,8 @@
 <body>
 <div class="menu-container">
     <ul class="menu-list">
-        <li><a href="index.html" class="active">Sub Case</a></li>
-        <li><a href="giveaway.html">Giveaway</a></li>
+        <li><a href="index.html">Sub Case</a></li>
+        <li><a href="giveaway.html" class="active">Giveaway</a></li>
     </ul>
 </div>
 <div class="logo-container">
@@ -23,74 +23,47 @@
 </div>
 <div class="spacer"></div>
 
-<!-- Rest of your HTML remains unchanged -->
 <div class="case-container">
     <div class="spin-container">
-        <div class="item">
-            <div class="item-wrapper">
-                <img src="TM.png" alt="Watermark" class="watermark">
-                <img src="item1.png" alt="MAX WIN 50 Tip on Rustmagic / Rustclash" class="item-image">
-                <span class="winning-item-text">MAX WIN 50 Tip</span>
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-wrapper">
-                <img src="TM.png" alt="Watermark" class="watermark">
-                <img src="item2.png" alt="25 Tip on Rustmagic / Rustclash" class="item-image">
-                <span class="winning-item-text">25 Tip</span>
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-wrapper">
-                <img src="TM.png" alt="Watermark" class="watermark">
-                <img src="item3.png" alt="15 Tip on Rustmagic / Rustclash" class="item-image">
-                <span class="winning-item-text">15 Tip</span>
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-wrapper">
-                <img src="TM.png" alt="Watermark" class="watermark">
-                <img src="item4.png" alt="10 Tip on Rustmagic / Rustclash" class="item-image">
-                <span class="winning-item-text">10 Tip</span>
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-wrapper">
-                <img src="TM.png" alt="Watermark" class="watermark">
-                <img src="item5.png" alt="Chef's Kiss" class="item-image">
-                <span class="winning-item-text">Chef's Kiss</span>
-            </div>
-        </div>
-        <div class="item">
-            <div class="item-wrapper">
-                <img src="TM.png" alt="Watermark" class="watermark">
-                <img src="item6.png" alt="5 Tip on Rustmagic / Rustclash" class="item-image">
-                <span class="winning-item-text">5 Tip</span>
-            </div>
-        </div>
+        <!-- Initially empty; participants will be added dynamically -->
     </div>
 </div>
 
 <div class="case-details">
-    <img src="case-image2.png" alt="Case Image" class="case-image">
+    <img src="case-image.png" alt="Case Image" class="case-image">
     <div class="case-info">
-        <h2 class="case-name">Sub Case</h2>
-        <p class="case-description">
-            Every new subscriber to FrequencyBenders will receive one free case.
-        </p>
-        <p class="gifted-sub">
-            If you received a gifted subscription, you will not be eligible for this reward.
-        </p>
-        <p class="additional-rules">
-            For every two gifted subs, you'll receive one spin.
-        </p>
-        <button class="open-case-btn">Open Case</button>
-    </div>
-    <div class="last-drop">
-        <h3>Last Drop</h3>
-        <div class="last-drop-item">
-            <img src="" alt="" class="last-drop-image" style="display: none;">
-            <span class="last-drop-text"></span>
+        <div class="header-row">
+            <h2 class="case-name">Giveaway Case</h2>
+        </div>
+        <div class="content-row">
+            <div class="left-column">
+                <p class="case-description">Join the giveaway by typing the keyword in chat</p>
+                <div class="keyword-input-container">
+                    <input type="text" id="keyword-input" placeholder="Set active keyword" class="keyword-input">
+                </div>
+                <div class="button-container">
+                    <button class="open-case-btn" id="spin-wheel">Spin</button>
+                    <button class="clear-btn" id="clear-giveaway">Clear</button>
+                </div>
+            </div>
+            <div class="middle-column">
+                <div class="winner-section">
+                    <div class="winner-display">
+                        <span class="winner-label">Winner Chat: </span><span id="winner-name">None</span>
+                    </div>
+                    <div class="winner-messages" id="winner-messages">
+                        <!-- Winner chat messages will appear here -->
+                    </div>
+                </div>
+            </div>
+            <div class="right-column">
+                <div class="last-drop">
+                    <h3>Participants:</h3>
+                    <div class="last-drop-item">
+                        <span class="participant-count" id="participant-count">0</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -162,9 +135,7 @@
 </div>
 
 <audio id="tickSound" src="tick.mp3" preload="auto"></audio>
-
 <div class="page-watermark">Made by Amyntus. Good luck!</div>
-
-<script src="script.js"></script>
+<script src="giveaway.js"></script>
 </body>
 </html>

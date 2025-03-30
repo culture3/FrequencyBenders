@@ -4,12 +4,11 @@ $(document).ready(function () {
     // Core variables
     const participants = new Set();
     const potentialDrops = [
-        { name: "MAX WIN 50 Tip", probability: 1, image: "item1.png" },
-        { name: "25 Tip", probability: 2, image: "item2.png" },
-        { name: "15 Tip", probability: 7, image: "item3.png" },
-        { name: "10 Tip", probability: 10, image: "item4.png" },
-        { name: "Chef's Kiss", probability: 10, image: "item5.png" },
-        { name: "5 Tip", probability: 70, image: "item6.png" },
+        { name: "100 Tip", probability: 0.2, image: "item8.png" },
+        { name: "50 Tip", probability: 5, image: "item7.png" },
+        { name: "25 Tip", probability: 10, image: "item2.png" },
+        { name: "15 Tip", probability: 30, image: "item3.png" },
+        { name: "10 Tip", probability: 54.8, image: "item4.png" },
     ];
     let reelItems = [];
     let currentWinner = null;
@@ -19,16 +18,10 @@ $(document).ready(function () {
     let winnerMessagesList = [];
     let isSpecialSpin = false;
     let specialItemPool = [];
+    let lastWinners = JSON.parse(localStorage.getItem('lastWinners')) || [];
 
-    const sortedDrops = [...potentialDrops].sort((a, b) => a.probability - b.probability);
-    let cumulativeProbTop10 = 0;
-    const top10PercentItems = sortedDrops.filter((item) => {
-        if (cumulativeProbTop10 < 10) {
-            cumulativeProbTop10 += item.probability;
-            return true;
-        }
-        return false;
-    });
+    // Define top items (individual probability ≤ 10%, totaling 15.2%)
+    const topPercentItems = potentialDrops.filter(item => item.probability <= 10); // 100 Tip, 50 Tip, 25 Tip
 
     // DOM elements
     const keywordInput = $('#keyword-input');
@@ -39,6 +32,7 @@ $(document).ready(function () {
     const spinButton = $('#spin-wheel');
     const rerollButton = $('#clear-giveaway');
     const tickSound = document.getElementById('tickSound');
+    const winnersList = $('#winners-list');
 
     let cumulativeProb = 0;
     const cumulativeProbs = potentialDrops.map((item) => {
@@ -51,8 +45,25 @@ $(document).ready(function () {
         return itemPool.map((item) => (cumProb += item.probability));
     }
 
+    // Function to update last winners list
+    function updateLastWinners(winner) {
+        lastWinners.unshift({ winner, timestamp: new Date().toISOString() });
+        if (lastWinners.length > 5) lastWinners.pop();
+        localStorage.setItem('lastWinners', JSON.stringify(lastWinners));
+        displayLastWinners();
+    }
+
+    // Function to display last winners
+    function displayLastWinners() {
+        winnersList.empty();
+        lastWinners.forEach(({ winner }) => {
+            const listItem = $(`<li>${winner}</li>`);
+            winnersList.append(listItem);
+        });
+    }
+
     // WebSocket setup
-    const channelId = '11408596';
+    const channelId = '4847686';
     const ws = new WebSocket('wss://ws-us2.pusher.com/app/32cbd69e4b950bf97679?protocol=7&client=js&version=8.4.0-rc2&flash=false');
     ws.onopen = () => {
         console.log('Connected to Kick Chat WebSocket');
@@ -118,9 +129,9 @@ $(document).ready(function () {
             const probsToUse = cumulativeProbsForPool(poolToUse);
             for (let i = 0; i < totalReelItems; i++) {
                 const randomItem = getRandomItem(poolToUse, probsToUse);
-                const isTop10 = !isSpecialSpin && top10PercentItems.some(item => item.name === randomItem.name);
-                const displayImage = isTop10 ? "golden.gif" : randomItem.image;
-                const displayName = isTop10 ? "Frequency Spin" : randomItem.name;
+                const isTop = !isSpecialSpin && topPercentItems.some(item => item.name === randomItem.name);
+                const displayImage = isTop ? "golden.gif" : randomItem.image;
+                const displayName = isTop ? "Frequency Spin" : randomItem.name;
                 const itemDiv = $(`
                     <div class="item">
                         <div class="item-wrapper">
@@ -162,16 +173,15 @@ $(document).ready(function () {
         rerollButton.text(winnerSelected ? 'Re-roll' : 'Clear');
     }
 
-    // Spin wheel (modified to clear winner name)
+    // Spin wheel
     function spinWheel(button, isPrizeSpin = false) {
         isSpinning = true;
         button.prop('disabled', true).text(isPrizeSpin ? 'Opening...' : 'Spinning...');
         spinContainer.css('left', '0px');
 
         if (!isPrizeSpin) {
-            // Clear previous winner, messages, and name on new participant spin
             currentWinner = null;
-            winnerName.text('None'); // Clear the winner name
+            winnerName.text('None');
             winnerMessages.empty();
             winnerMessagesList = [];
             populateReel(Array.from(participants));
@@ -238,14 +248,14 @@ $(document).ready(function () {
                                     currentWinner = winningItem;
                                     winnerName.text(currentWinner);
                                     winningElement.find('.participant-name')
-                                        .addClass('float-image')
-                                        .css({ 'max-width': 'none', 'overflow': 'visible' });
+                                        .addClass('float-image highlighted-winner');
+                                    updateLastWinners(currentWinner);
                                     winnerSelected = true;
                                     updateButtons();
                                 } else {
-                                    const isTop10Percent = !isSpecialSpin && top10PercentItems.some(item => item.name === winningItem.name);
-                                    const displayImage = isTop10Percent ? "golden.gif" : winningItem.image;
-                                    const displayName = isTop10Percent ? "Frequency Spin" : winningItem.name;
+                                    const isTop = !isSpecialSpin && topPercentItems.some(item => item.name === winningItem.name);
+                                    const displayImage = isTop ? "golden.gif" : winningItem.image;
+                                    const displayName = isTop ? "Frequency Spin" : winningItem.name;
 
                                     winnerName.text(currentWinner);
                                     winningElement.find('.item-wrapper').html(
@@ -254,10 +264,10 @@ $(document).ready(function () {
                                          <span class="winning-item-text">${displayName}</span>`
                                     );
 
-                                    if (isTop10Percent && !isSpecialSpin) {
-                                        console.log("Frequency Spin triggered! Re-spinning with top 10% items...");
+                                    if (isTop && !isSpecialSpin) {
+                                        console.log("Frequency Spin triggered! Re-spinning with top items...");
                                         isSpecialSpin = true;
-                                        specialItemPool = top10PercentItems;
+                                        specialItemPool = topPercentItems; // 100 Tip, 50 Tip, 25 Tip
                                         setTimeout(() => spinWheel(button, true), 1500);
                                     } else {
                                         triggerConfetti(winningElement);
@@ -278,7 +288,7 @@ $(document).ready(function () {
         );
     }
 
-    // Unchanged functions: updateItemOpacityAndSound, triggerConfetti
+    // Update item opacity and play sound
     function updateItemOpacityAndSound(itemWidth, absoluteCenter, lastCenteredItemIndex) {
         let closestItemIndex = -1;
         let minDistanceFromCenter = Infinity;
@@ -304,6 +314,7 @@ $(document).ready(function () {
         return lastCenteredItemIndex;
     }
 
+    // Trigger confetti
     function triggerConfetti(winningElement) {
         const itemPosition = winningElement.offset();
         const itemWidth = winningElement.width();
@@ -334,7 +345,7 @@ $(document).ready(function () {
 
     rerollButton.on('click', function () {
         if (winnerSelected) {
-            spinWheel($(this), false); // Re-roll clears previous winner
+            spinWheel($(this), false);
         } else {
             participants.clear();
             currentWinner = null;
@@ -352,4 +363,5 @@ $(document).ready(function () {
     // Initial setup
     updateButtons();
     participantCount.text('0');
+    displayLastWinners();
 });

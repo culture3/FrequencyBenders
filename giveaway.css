@@ -264,6 +264,7 @@ body {
     justify-content: center;
     min-height: 130px;
     width: 100%;
+	margin-top: -30px;
 }
 .participant-count {
     color: #fff;
@@ -508,4 +509,32 @@ body {
 
 #winner-messages::-webkit-scrollbar-corner {
     background: rgba(20, 20, 20, 0.8); /* Match track */
+}
+
+/* Style for Last Winners section */
+#last-winners {
+    margin-top: -25px; /* Space above the section */
+    color: white; /* White text for the entire section */
+    text-align: center; /* Center-align the heading */
+}
+
+#last-winners h3 {
+    font-size: 1.2em; /* Slightly larger heading */
+    margin-bottom: -10px; /* Space below "Last Winners:" */
+    color: white; /* Explicitly white, though inherited from parent */
+}
+
+#winners-list {
+    list-style: none; /* Remove default bullets */
+    padding: 0; /* Remove default padding */
+    display: flex; /* Use Flexbox for horizontal alignment */
+    gap: 15px; /* Space between items */
+    flex-wrap: wrap; /* Allow wrapping if too many items */
+    justify-content: center; /* Center the horizontal list */
+	margin-bottom: -50px;
+}
+
+#winners-list li {
+    padding: 5px; /* Padding around each item */
+    color: white; /* White text for each winner */
 }

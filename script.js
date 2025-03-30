@@ -117,6 +117,8 @@ $(document).ready(function () {
         button.prop("disabled", true).text("Spinning...");
         spinContainer.css("left", "0px");
         populateReel(isSpecialSpin ? specialItemPool : items);
+        
+        $(".case-container").removeClass("hide-separator");
 
         $(".item").css({ transform: "none", animation: "none", opacity: 0.5 });
         $(".item img").css({ animation: "none", transform: "translate(-50%, -50%)" });
@@ -170,6 +172,8 @@ $(document).ready(function () {
                                 lastCenteredItemIndex = updateItemOpacityAndSound(itemWidth, absoluteCenter, lastCenteredItemIndex);
                             },
                             complete: function () {
+                                $(".case-container").addClass("hide-separator");
+
                                 const winningItem = reelItems[closestItemIndex];
                                 const isTop10Percent = !isSpecialSpin && top10PercentItems.some(item => item.name === winningItem.name);
                                 const displayImage = isTop10Percent && !isSpecialSpin ? "golden.gif" : winningItem.image;

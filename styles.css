@@ -43,6 +43,11 @@ body {
     z-index: 2;
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, white 10%, white 90%, transparent 100%);
     mask-image: linear-gradient(to bottom, transparent 0%, white 10%, white 90%, transparent 100%);
+    transition: opacity 0.3s ease;
+}
+
+.case-container.hide-separator::before {
+    opacity: 0;
 }
 
 .spin-container {
@@ -90,7 +95,7 @@ body {
     height: 70px;
     object-fit: contain;
     z-index: 1;
-    filter: drop-shadow(0 0 13px rgba(255, 18, 165, 0.67)) drop-shadow(0 0 27px rgba(192, 132, 252, 0.33)); /* Reduced from 20px/1 and 40px/0.5 */
+    filter: drop-shadow(0 0 13px rgba(255, 18, 165, 0.67)) drop-shadow(0 0 27px rgba(192, 132, 252, 0.33));
 }
 
 .winning-item-text {
@@ -104,7 +109,7 @@ body {
     text-shadow: 0 0 7px rgba(147, 51, 234, 0.53), 0 0 13px rgba(192, 132, 252, 0.33);
     white-space: nowrap;
     z-index: 2;
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .case-details {
@@ -174,7 +179,7 @@ body {
     word-wrap: break-word;
     max-width: 100%;
     text-shadow: 0 0 13px rgba(255, 18, 165, 0.27);
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .case-name {
@@ -281,7 +286,7 @@ body {
     font-size: 0.9em;
     min-width: 40px;
     text-align: center;
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .case-container, .case-details {

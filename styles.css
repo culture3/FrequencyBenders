@@ -10,6 +10,92 @@ body {
     font-family: 'Bai Jamjuree', sans-serif;
 }
 
+.menu-container {
+    position: absolute;
+    top: 110px; /* Adjust as needed */
+    z-index: 10;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.menu-list li {
+    margin: 0;
+}
+
+.menu-list a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-family: 'Bai Jamjuree', sans-serif;
+    text-shadow: 0 0 7px rgba(147, 51, 234, 0.53), 0 0 13px rgba(192, 132, 252, 0.33);
+    transition: all 0.3s ease;
+    padding: 5px 10px;
+    display: block;
+    background: linear-gradient(
+        to right,
+        rgba(255, 18, 165, 0.1),
+        rgba(192, 132, 252, 0.05),
+        rgba(255, 18, 165, 0.1)
+    );
+    border-radius: 5px;
+}
+
+.menu-list a:hover {
+    color: #ff12a5;
+    background: linear-gradient(
+        to right,
+        rgba(255, 18, 165, 0.3),
+        rgba(192, 132, 252, 0.15),
+        rgba(255, 18, 165, 0.3)
+    );
+    transform: translateY(-2px);
+}
+
+.menu-list a.active {
+    color: #fff;
+    font-weight: bold;
+    background: linear-gradient(
+        to right,
+        rgba(255, 18, 165, 0.4),
+        rgba(192, 132, 252, 0.2),
+        rgba(255, 18, 165, 0.4)
+    );
+    text-shadow: 0 0 10px rgba(255, 18, 165, 0.8), 0 0 15px rgba(192, 132, 252, 0.6);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: -100px;
+    margin-top: -20px;
+}
+
+.logo-image {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 13px rgba(255, 18, 165, 0.53));
+    margin-top: 50px;
+}
+
+.logo-text {
+    color: #fff;
+    font-size: 2em;
+    font-family: 'Bai Jamjuree', sans-serif;
+    margin-left: 20px;
+    text-shadow: 0 0 7px rgba(147, 51, 234, 0.53), 0 0 13px rgba(192, 132, 252, 0.33);
+    margin-top: 50px;
+}
+
 .spacer {
     height: 100px;
 }
@@ -333,29 +419,65 @@ body {
     z-index: 10;
 }
 
-.logo-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: -100px;
-    margin-top: -20px;
-}
-
-.logo-image {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    filter: drop-shadow(0 0 13px rgba(255, 18, 165, 0.53));
-    margin-top: 50px;
-}
-
-.logo-text {
+/* New styles for Step 1 */
+#keyword-input {
+    padding: 8px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    background-color: #151719;
     color: #fff;
-    font-size: 2em;
-    font-family: 'Oswald', sans-serif;
-    margin-left: 20px;
-    text-shadow: 0 0 7px rgba(147, 51, 234, 0.53), 0 0 13px rgba(192, 132, 252, 0.33);
-    margin-top: 50px;
+    width: 200px;
+    margin: 10px 0;
     font-family: 'Bai Jamjuree', sans-serif;
+}
+
+#clear-giveaway {
+    padding: 8px 15px;
+    background-color: #a12071;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1em;
+    margin-left: 10px;
+    font-family: 'Bai Jamjuree', sans-serif;
+}
+
+#clear-giveaway:hover {
+    background-color: #7b0f52;
+}
+
+.last-drop-text {
+    color: #fff;
+    font-size: 1.2em;
+    text-align: center;
+    word-wrap: break-word;
+    max-width: 100%;
+    text-shadow: 0 0 13px rgba(255, 18, 165, 0.27);
+    font-weight: bold;
+}
+
+.gifted-sub {
+    margin-top: -5px;
+    margin-bottom: 1em;
+    color: #fff;
+    font-size: 1em;
+}
+
+#winner-name {
+    font-weight: bold;
+    color: #ff12a5;
+}
+
+.case-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+}
+
+.case-info button {
+    display: inline-block;
 }

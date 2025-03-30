@@ -538,3 +538,58 @@ body {
     padding: 5px; /* Padding around each item */
     color: white; /* White text for each winner */
 }
+
+.leaderboard-container {
+    position: fixed;
+    top: 80px;
+    right: 25px;
+    width: 300px; /* Fixed width */
+    height: 400px; /* Increased height to fit all 10 players without scroll */
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 18, 165, 0.2),
+        rgba(192, 132, 252, 0.05),
+        rgba(255, 18, 165, 0.2)
+    ), #0b0c0c;
+    border-radius: 5px;
+    padding: 15px;
+    z-index: 1000;
+    color: #fff;
+    font-family: 'Bai Jamjuree', sans-serif;
+    box-shadow: 0px 0px 20px rgba(255, 18, 165, 0.2);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.leaderboard-container h3 {
+    font-size: 1.2em;
+    margin: 0 0 10px 0;
+    text-align: center;
+    text-shadow: 0 0 7px rgba(147, 51, 234, 0.53);
+}
+
+.total-given-away {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    text-shadow: 0 0 7px rgba(255, 18, 165, 0.53);
+}
+
+.leaderboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1; /* Takes remaining space */
+}
+  
+.leaderboard-list li {
+    font-size: 1em;
+    margin: 5px 0;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 0 0 5px rgba(255, 18, 165, 0.3);
+}
